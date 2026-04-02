@@ -1,0 +1,154 @@
+body {
+    font-family: Arial, sans-serif;
+    color: #666;
+    line-height: 1.6;
+}
+
+.travel-container {
+    border: 1px solid #ccc;
+    padding: 40px;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.content-box {
+    border: 1px solid #ccc;
+    margin-top: 20px;
+}
+
+header, section {
+    padding: 30px;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 0;
+}
+
+h1 { font-size: 24px; color: #666; text-transform: uppercase; }
+h2 { font-size: 22px; color: #666; text-transform: uppercase; }
+h3 { font-size: 20px; color: #666; }
+
+.interactive-map .region {
+    transition: fill 0.3s ease;
+    cursor: pointer;
+}
+
+.interactive-map .region:hover {
+    fill: #999; 
+}
+
+.styled-text {
+    color: #555;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    text-align: justify;
+}
+
+.weather-placeholder {
+    min-height: 200px; 
+    background-color: #f9f9f9;
+    border: 1px dashed #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+}
+
+.flex-stats {
+    display: flex; 
+    justify-content: space-around; 
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.stat-item {
+    text-align: center;
+    flex: 1;
+    min-width: 120px;
+}
+
+.stat-item .number {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.stat-item .label {
+    font-size: 0.9rem;
+    color: #777;
+    text-transform: lowercase;
+}
+
+.feedback-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 500px;
+}
+
+.form-input, .form-textarea {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-textarea {
+    min-height: 100px;
+    resize: vertical; 
+}
+
+.form-button {
+    padding: 12px 20px;
+    background-color: #666;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+    align-self: flex-start;
+}
+
+.form-button:hover {
+    background-color: #333;
+}
+
+
+.faq-item {
+    margin-bottom: 10px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+}
+
+.faq-item summary {
+    padding: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    list-style: none;
+    position: relative;
+}
+
+.faq-item summary::after {
+    content: '▼';
+    float: right;
+    font-size: 12px;
+    color: #999;
+}
+
+.faq-item[open] summary::after {
+    content: '▲';
+}
+
+.faq-content {
+    padding: 0 15px 15px;
+    color: #666;
+}
+
+
+.section-footer {
+    background-color: #fcfcfc;
+    padding-bottom: 60px; 
+}
