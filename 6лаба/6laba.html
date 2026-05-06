@@ -1,0 +1,105 @@
+<html>
+<body>
+
+    <h2>Задача 1: Разница, Уникальные, Фильтр объектов</h2>
+    <input type="text" id="in1" value="1, 10, 5, 20, 5, 1">
+    <button onclick="task1()">Выполнить</button>
+    <p id="out1"></p>
+
+    <hr>
+
+    <h2>Задача 2: Больше числа и Плоский массив</h2>
+    <p>Порог (больше чем):</p>
+    <input type="number" id="limit" value="2">
+    <button onclick="task2()">Выполнить</button>
+    <p id="out2"></p>
+
+    <hr>
+
+    <h2>Задача 3: Пары и Тройки (сумма 0)</h2>
+    <input type="text" id="in3" value="-1, 1, 0, 1, -1">
+    <button onclick="task3()">Выполнить</button>
+    <p id="out3"></p>
+
+    <script>
+        function getArr(id) 
+        {
+            return document.getElementById(id).value.split(',').map(Number);
+        }
+
+        function task1() {
+            const arr = getArr('in1');
+            const diff = Math.max(...arr) - Math.min(...arr);
+            const unique = [...new Set(arr)];
+            const objArr = [{id:1, isDone:true}, {id:2, isDone:true}, {id:3, isDone:true}];
+            const done = objArr.filter(o => o.isDone).map(o => o.id);
+            document.getElementById('out1').innerText = 
+                "Разница: " + diff + " | Уникальные: " + unique + " | ID готовых: " + done;
+        }
+
+        function task2() 
+        {
+            const limit = Number(document.getElementById('limit').value);
+            const nested = [1, 4, [34, 1, 20], [6, [6, 12, 8], 6]];            
+            const flatten = (data) => data.reduce((acc, val) => 
+                Array.isArray(val) ? acc.concat(flatten(val)) : acc.concat(val), 
+                []
+            );
+
+            const flat = flatten(nested);
+            const filtered = flat.filter(n => n > limit);
+            document.getElementById('out2').innerText = 
+                "Результат фильтра: " + filtered + " | Плоский массив: " + flat;
+        }
+
+        function task3() 
+        {
+            const arr = getArr('in3');
+            function findPairs(a) 
+            {
+                let count = 0;
+                let copy = [...a];
+                for (let i = 0; i < copy.length; i++) 
+                {
+                    for (let j = i + 1; j < copy.length; j++) 
+                    {
+                        if (copy[i] + copy[j] === 0) 
+                        {
+                            count++;
+                            copy.splice(j, 1);
+                            copy.splice(i, 1);
+                            i--; break;
+                        }
+                    }
+                }
+                return count;
+            }
+            function findTriplets(a) 
+            {
+                let count = 0;
+                let copy = [...a];
+                for (let i = 0; i < copy.length; i++) 
+                {
+                    for (let j = i + 1; j < copy.length; j++) 
+                    {
+                        for (let k = j + 1; k < copy.length; k++) 
+                        {
+                            if (copy[i] + copy[j] + copy[k] === 0) 
+                            {
+                                count++;
+                                copy.splice(k, 1);
+                                copy.splice(j, 1);
+                                copy.splice(i, 1);
+                                i--; break;
+                            }
+                        }
+                    }
+                }
+                return count;
+            }
+            document.getElementById('out3').innerText = 
+                "Пар найдено: " + findPairs(arr) + " | Троек найдено: " + findTriplets(arr);
+        }
+    </script>
+</body>
+</html>

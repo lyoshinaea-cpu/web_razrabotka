@@ -1,0 +1,169 @@
+
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Лабораторная: Генераторы, Map и BigInt</title>
+</head>
+<body>
+    <section>
+        <h2>Задача 1: Генераторы</h2>
+        
+        <div>
+            <strong>1. Случайные числа:</strong>
+            от <input type="number" id="randN" value="1"> до <input type="number" id="randM" value="100">
+            <button onclick="runRandom()">Сгенерировать</button>
+            <div class="result" id="resRandom"></div>
+        </div>
+        <br>
+        <div>
+            <strong>2. Последовательность Падована:</strong>
+            <button onclick="runPadovan()">Следующее число</button>
+            <div class="result" id="resPadovan"></div>
+        </div>
+        <br>
+        <div>
+            <strong>3. Простые числа (бесконечно):</strong>
+            <button onclick="runPrimes()">Следующее число</button>
+            <div class="result" id="resPrimes"></div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Задача 2: Map и BigInt</h2>
+        
+        <div>
+            <strong>1. Вхождения символов (Map):</strong><br>
+            <input type="text" id="textInput" value="hello world" style="width: 200px;">
+            <button onclick="runCountChars()">Посчитать</button>
+            <div class="result" id="resChars"></div>
+        </div>
+        <br>
+        <div>
+            <strong>2. n-ое простое число (BigInt):</strong><br>
+            n = <input type="number" id="primeN" value="10">
+            <button onclick="runGetPrime()">Найти</button>
+            <div class="result" id="resBigPrime"></div>
+        </div>
+    </section>
+
+    <script>
+        function* randomGenerator(n, m) 
+        {
+            while (true) 
+            {
+                yield Math.floor(Math.random() * (m - n + 1)) + n;
+            }
+        }
+        function* padovanGenerator() 
+        {
+            let a = 1, b = 1, c = 1;
+            yield a; yield b; yield c;
+            while (true) {
+                let next = a + b;
+                yield next;
+                a = b; b = c; c = next;
+            }
+        }
+        function isPrime(num) 
+        {
+            for (let i = 2, s = Math.sqrt(num); i <= s; i++)
+                if (num % i === 0) return false;
+            return num > 1;
+        }
+
+        function* primeGenerator() 
+        {
+            let n = 2;
+            while (true) {
+                if (isPrime(n)) yield n;
+                n++;
+            }
+        }
+
+        function countChars(str) 
+        {
+            const charMap = new Map();
+            for (let char of str) {
+                if (char === ' ') continue;
+                charMap.set(char, (charMap.get(char) || 0) + 1);
+            }
+            return charMap;
+        }
+
+        function isBigPrime(num) 
+        {
+            if (num < 2n) return false;
+            for (let i = 2n; i * i <= num; i++) 
+            {
+                if (num % i === 0n) return false;
+            }
+            return true;
+        }
+
+        function getPrime(n)
+        {
+            let count = 0n;
+            let num = 2n;
+            const target = BigInt(n);
+            while (true) {
+                if (isBigPrime(num)) {
+                    count++;
+                    if (count === target) return num;
+                }
+                num++;
+            }
+        }
+
+  
+        
+
+        let padGen = padovanGenerator();
+        let priGen = primeGenerator();
+        function runRandom() 
+        {
+            const n = parseInt(document.getElementById('randN').value);
+            const m = parseInt(document.getElementById('randM').value);
+            const gen = randomGenerator(n, m);
+
+
+            document.getElementById('resRandom').innerText = gen.next().value;
+        }
+
+
+
+        function runPadovan() 
+        {
+            document.getElementById('resPadovan').innerText = padGen.next().value;
+        }
+        function runPrimes() 
+        {
+            document.getElementById('resPrimes').innerText = priGen.next().value;
+        }
+
+
+
+        function runCountChars() 
+        {
+            const text = document.getElementById('textInput').value;
+            const result = countChars(text);
+            let output = "";
+            result.forEach((val, key) => 
+            {
+                output += `'${key}': ${val}; `;
+            });
+            document.getElementById('resChars').innerText = output;
+        }
+
+        function runGetPrime() 
+        {
+            const n = document.getElementById('primeN').value;
+            document.getElementById('resBigPrime').innerText = "Вычисляю...";
+            setTimeout(() => 
+            {
+                const result = getPrime(n);
+                document.getElementById('resBigPrime').innerText = result + "n";
+            }, 10);
+        }
+    </script>
+</body>
+</html>
